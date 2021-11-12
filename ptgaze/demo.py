@@ -13,8 +13,7 @@ from .utils import get_3d_face_model
 import pandas as pd
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-import os
-import sys
+
 
 class Demo:
     QUIT_KEYS = {27, ord('q')}
@@ -44,38 +43,22 @@ class Demo:
             self._run_on_image()
         else:
             raise ValueError
-    def run_commands(path_input):
-        sys.path.append(os.getcwd())
-        images = []
-        for filename in os.listdir((os.path.join(os.getcwd(),path_input))):
-            file1=os.path.join(path_input,filename)
-            images.append(file1)
-        for filen in images:
-          print(filen)
-          cmdline='ptgaze --mode eth-xgaze --image {} --o . --no-screen '.format(filen)
-          run_command(cmdline)
 
     def _run_on_image(self):
-        folder_path=self.config.demo.image_path
-        images = []
-        for filename in os.listdir(path_input):
-            file1=os.path.join(path_input,filename)
-            images.append(file1)
-        for filen in images:
-            image = cv2.imread(filen)
-            self._process_image(str(filen).replace("/","_"),image)
-            if self.config.demo.display_on_screen:
-                while True:
-                    key_pressed = self._wait_key()
-                    if self.stop:
-                        break
-                    if key_pressed:
-                        self._process_image(image)
-                    cv2.imshow('image', self.visualizer.image)
-            if self.config.demo.output_dir:
-                name = pathlib.Path(filen).name
-                output_path = pathlib.Path(self.config.demo.output_dir) / name
-                cv2.imwrite(output_path.as_posix(), self.visualizer.image)
+        image = cv2.imread(self.config.demo.image_path)
+        self._process_image(str(self.config.demo.image_path).replace("/","_"),image)
+        if self.config.demo.display_on_screen:
+            while True:
+                key_pressed = self._wait_key()
+                if self.stop:
+                    break
+                if key_pressed:
+                    self._process_image(image)
+                cv2.imshow('image', self.visualizer.image)
+        if self.config.demo.output_dir:
+            name = pathlib.Path(self.config.demo.image_path).name
+            output_path = pathlib.Path(self.config.demo.output_dir) / name
+            cv2.imwrite(output_path.as_posix(), self.visualizer.image)
         
     
 
