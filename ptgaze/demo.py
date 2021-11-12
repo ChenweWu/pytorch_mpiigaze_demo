@@ -46,7 +46,7 @@ class Demo:
 
     def _run_on_image(self):
         image = cv2.imread(self.config.demo.image_path)
-        self._process_image(str(self.config.demo.image_path),image)
+        self._process_image(str(self.config.demo.image_path).replace("\\","_"),image)
         if self.config.demo.display_on_screen:
             while True:
                 key_pressed = self._wait_key()
