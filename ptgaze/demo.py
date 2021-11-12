@@ -97,7 +97,7 @@ class Demo:
             self._draw_landmarks(face)
             self._draw_face_template_model(face)
             df=self._draw_gaze_vector(face)
-            df.to_csv("frame"+str(i)+"_face_"+str(j)+".csv")
+            df.to_csv("frame"+str(i).replace("/","_")+"_face_"+str(j)+".csv")
             self._display_normalized_image(face)
 
         if self.config.demo.use_camera:
